@@ -1,22 +1,21 @@
 <template>
     <div
-        class="flex items-center justify-between bg-white rounded-lg p-4 shadow-md hover:shadow-lg transition-all duration-300">
-        <!-- Checkbox va Vazifa Matni -->
+        class="flex items-center justify-between bg-gray-800 p-4 rounded-lg shadow-md hover:shadow-lg transition-all duration-300">
+        <!-- Checkbox va Matn -->
         <div class="flex items-center gap-4">
             <input type="checkbox" :checked="todo.completed" @change="$emit('toggle-complete', todo.id)"
-                class="h-5 w-5 accent-green-500 rounded cursor-pointer" />
+                class="h-6 w-6 accent-green-500 rounded cursor-pointer border-gray-500 border-2" />
             <p :class="{
-                'line-through text-gray-400': todo.completed,
-                'text-gray-800': !todo.completed,
-            }" class="text-lg font-semibold">
+                'line-through text-gray-500': todo.completed,
+                'text-white': !todo.completed,
+            }" class="text-lg font-medium">
                 {{ todo.text }}
             </p>
         </div>
 
-        <!-- O'chirish tugmasi -->
+        <!-- Delete Tugmasi -->
         <button @click="$emit('delete-todo', todo.id)"
-            class="flex items-center justify-center w-8 h-8 bg-red-500 hover:bg-red-600 text-white rounded-full transition-all duration-200"
-            aria-label="Delete Task">
+            class="w-8 h-8 flex items-center justify-center bg-red-500 hover:bg-red-600 text-white rounded-full transition-all duration-300">
             🗑️
         </button>
     </div>
@@ -32,5 +31,3 @@ export default {
     },
 };
 </script>
-
-<style scoped></style>

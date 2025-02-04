@@ -1,24 +1,24 @@
 <template>
     <div class="max-w-2xl mx-auto mt-10">
         <!-- Sarlavha -->
-        <h1 class="text-3xl font-bold text-center mb-6 text-gray-800">
+        <h1 class="text-4xl font-bold text-center mb-6 text-white">
             My To-Do List
         </h1>
 
-        <!-- Vazifalar ro'yxati -->
+        <!-- Input va tugma -->
+        <div class="flex items-center gap-4 mb-6">
+            <input v-model="newTodo" type="text" placeholder="Add a new task..."
+                class="flex-grow p-3 rounded-lg border-2 border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+            <button @click="addTodo"
+                class="bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-lg transition-all duration-200">
+                Add
+            </button>
+        </div>
+
+        <!-- Vazifalar Ro'yxati -->
         <div class="space-y-4">
             <TodoItem v-for="todo in todos" :key="todo.id" :todo="todo" @toggle-complete="toggleComplete"
                 @delete-todo="deleteTodo" />
-        </div>
-
-        <!-- Yangi Vazifa Qo'shish -->
-        <div class="mt-6 flex gap-4">
-            <input v-model="newTodo" type="text" placeholder="Add a new task..."
-                class="flex-grow p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400" />
-            <button @click="addTodo"
-                class="bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-lg transition duration-200">
-                Add
-            </button>
         </div>
     </div>
 </template>
@@ -60,5 +60,3 @@ export default {
     },
 };
 </script>
-
-<style scoped></style>
