@@ -1,23 +1,36 @@
 <template>
-    <div class="flex items-center justify-between p-2 bg-gray-100 rounded-lg mb-2">
-        <div :class="{ 'line-through': todo.completed }" class="text-gray-800">
-            {{ todo.text }}
+    <div
+        class="flex items-center justify-between bg-white rounded-lg p-4 shadow-md hover:shadow-lg transition-all duration-300">
+        <!-- Checkbox va Vazifa Matni -->
+        <div class="flex items-center gap-4">
+            <input type="checkbox" :checked="todo.completed" @change="$emit('toggle-complete', todo.id)"
+                class="h-5 w-5 accent-green-500 rounded cursor-pointer" />
+            <p :class="{
+                'line-through text-gray-400': todo.completed,
+                'text-gray-800': !todo.completed,
+            }" class="text-lg font-semibold">
+                {{ todo.text }}
+            </p>
         </div>
-        <div>
-            <button @click="$emit('toggle', todo.id)" class="text-green-500 mr-2">✔️</button>
-            <button @click="$emit('delete', todo.id)" class="text-red-500">❌</button>
-        </div>
+
+        <!-- O'chirish tugmasi -->
+        <button @click="$emit('delete-todo', todo.id)"
+            class="flex items-center justify-center w-8 h-8 bg-red-500 hover:bg-red-600 text-white rounded-full transition-all duration-200"
+            aria-label="Delete Task">
+            🗑️
+        </button>
     </div>
 </template>
 
 <script>
 export default {
-    props: ['todo'],
+    props: {
+        todo: {
+            type: Object,
+            required: true,
+        },
+    },
 };
 </script>
 
-<style scoped>
-.line-through {
-    text-decoration: line-through;
-}
-</style>
+<style scoped></style>

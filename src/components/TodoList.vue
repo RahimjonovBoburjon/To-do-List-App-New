@@ -1,54 +1,64 @@
 <template>
-    <div class="max-w-md mx-auto mt-10">
-        <h1 class="text-2xl font-bold text-center mb-4">Vue.js To-Do List</h1>
-        <div class="flex items-center mb-4">
-            <input v-model="newTodo" @keyup.enter="addTodo" class="flex-1 border rounded-l-lg px-2 py-1"
-                placeholder="Add a new task..." />
-            <button @click="addTodo" class="bg-blue-500 text-white px-4 py-1 rounded-r-lg">Add</button>
+    <div class="max-w-2xl mx-auto mt-10">
+        <!-- Sarlavha -->
+        <h1 class="text-3xl font-bold text-center mb-6 text-gray-800">
+            My To-Do List
+        </h1>
+
+        <!-- Vazifalar ro'yxati -->
+        <div class="space-y-4">
+            <TodoItem v-for="todo in todos" :key="todo.id" :todo="todo" @toggle-complete="toggleComplete"
+                @delete-todo="deleteTodo" />
         </div>
-        <div>
-            <TodoItem v-for="todo in todos" :key="todo.id" :todo="todo" @toggle="toggleTodo" @delete="deleteTodo" />
+
+        <!-- Yangi Vazifa Qo'shish -->
+        <div class="mt-6 flex gap-4">
+            <input v-model="newTodo" type="text" placeholder="Add a new task..."
+                class="flex-grow p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400" />
+            <button @click="addTodo"
+                class="bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-lg transition duration-200">
+                Add
+            </button>
         </div>
     </div>
 </template>
 
 <script>
-import { ref } from 'vue';
-import TodoItem from './TodoItem.vue';
+import TodoItem from "./TodoItem.vue";
 
 export default {
     components: { TodoItem },
-    setup() {
-        const todos = ref([]);
-        const newTodo = ref('');
-
-        const addTodo = () => {
-            if (newTodo.value.trim() !== '') {
-                todos.value.push({
+    data() {
+        return {
+            todos: [
+                { id: 1, text: "Learn Vue.js", completed: false },
+                { id: 2, text: "Build a To-Do App", completed: true },
+            ],
+            newTodo: "",
+        };
+    },
+    methods: {
+        addTodo() {
+            if (this.newTodo.trim() !== "") {
+                this.todos.push({
                     id: Date.now(),
-                    text: newTodo.value,
+                    text: this.newTodo,
                     completed: false,
                 });
-                newTodo.value = '';
+                this.newTodo = "";
             }
-        };
-
-        const toggleTodo = (id) => {
-            const todo = todos.value.find(t => t.id === id);
-            if (todo) todo.completed = !todo.completed;
-        };
-
-        const deleteTodo = (id) => {
-            todos.value = todos.value.filter(t => t.id !== id);
-        };
-
-        return { todos, newTodo, addTodo, toggleTodo, deleteTodo };
+        },
+        toggleComplete(id) {
+            const todo = this.todos.find((todo) => todo.id === id);
+            if (todo) {
+                todo.completed = !todo.completed;
+            }
+        },
+        deleteTodo(id) {
+            this.todos = this.todos.filter((todo) => todo.id !== id);
+        },
     },
 };
 </script>
 
-<style>
-body {
-    font-family: Arial, sans-serif;
-}
-</style>
+<style scoped></style>
